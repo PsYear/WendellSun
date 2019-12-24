@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.wendellsun.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、在执行代码时使用 tf.enable_eager_execution() 开启eager模式 二、正向传播支持自定义class类型    定义的model继承keras.model 在init()里定义所用到的layer类型 在call()里连接layer，返回output  二、反向传播的使用    先用tf的api定义loss函数  用tfe的api调用loss得到梯度grads   12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Graphs的运行方式执行Eager模式的代码">
+<meta property="og:url" content="https://www.wendellsun.com/2018/10/12/用Graphs的运行方式执行Eager模式的代码/index.html">
+<meta property="og:site_name" content="宋竹温 | 不羁跬步">
+<meta property="og:description" content="一、在执行代码时使用 tf.enable_eager_execution() 开启eager模式 二、正向传播支持自定义class类型    定义的model继承keras.model 在init()里定义所用到的layer类型 在call()里连接layer，返回output  二、反向传播的使用    先用tf的api定义loss函数  用tfe的api调用loss得到梯度grads   12">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-12-24T11:43:36.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Graphs的运行方式执行Eager模式的代码">
+<meta name="twitter:description" content="一、在执行代码时使用 tf.enable_eager_execution() 开启eager模式 二、正向传播支持自定义class类型    定义的model继承keras.model 在init()里定义所用到的layer类型 在call()里连接layer，返回output  二、反向传播的使用    先用tf的api定义loss函数  用tfe的api调用loss得到梯度grads   12">
+
+<link rel="canonical" href="https://www.wendellsun.com/2018/10/12/用Graphs的运行方式执行Eager模式的代码/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>用Graphs的运行方式执行Eager模式的代码 | 宋竹温 | 不羁跬步</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宋竹温 | 不羁跬步</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">独立，客观，开放的编程师事务所</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/10/12/用Graphs的运行方式执行Eager模式的代码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用Graphs的运行方式执行Eager模式的代码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-12T00:00:00+08:00">2018-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一、在执行代码时使用 <code>tf.enable_eager_execution()</code> 开启eager模式</p>
+<p>二、正向传播支持自定义class类型  </p>
+<ol>
+<li><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L99" target="_blank" rel="noopener">定义</a>的model继承keras.model<br></li>
+<li>在<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L110" target="_blank" rel="noopener"><strong>init</strong>()</a>里定义所用到的layer类型<br></li>
+<li>在<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L133" target="_blank" rel="noopener">call()</a>里连接layer，返回<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L146" target="_blank" rel="noopener">output</a><br></li>
+</ol>
+<p>二、反向传播的使用  </p>
+<ol>
+<li><p>先用tf的api定义<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L158" target="_blank" rel="noopener">loss函数</a><br></p>
+</li>
+<li><p>用tfe的<a href="https://www.tensorflow.org/api_docs/python/tf/contrib/eager/implicit_gradients" target="_blank" rel="noopener">api</a>调用loss得到梯度grads  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tfe.gradients_function(loss,x)</span><br><span class="line">tfe.implicit_gradients(loss)</span><br></pre></td></tr></table></figure>
+
+<p>或者也可以采用<a href="https://www.tensorflow.org/api_docs/python/tf/GradientTape" target="_blank" rel="noopener">GradientTape(y,x)</a>来进行计算可以根据函数y计算变量x的梯  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> grad_tape:</span><br><span class="line">    grad_tape.gradient(y,x)</span><br></pre></td></tr></table></figure>
+
+<p>在tf的诸多eager execution样例中里用第二种方法较多  </p>
+</li>
+<li><p>用tf定义的<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L317" target="_blank" rel="noopener">optimizer</a>优化梯度更新参数  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer.apply_gradients(grad)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>三、Eager的输入使用<code>tf.data.Dataset</code>但不支持<code>placeholder</code>和<code>string_input_producer</code>这类在graph模式中使用的输入</p>
+<p>四、使用<code>tf.train.Checkpoint()</code><a href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint" target="_blank" rel="noopener">保存</a>模型的checkpoint</p>
+<p>五、可以使用<code>tf.contrib.eager.defun</code>对python的函数进行封装转换成图的形式进行运算。用eager的写法可以实现graph的运算速度。  </p>
+<ol>
+<li><p>使用了defun的forward propagation例子如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.call = tf.contrib.eager.defun(model.call)</span><br><span class="line">model(x, training=<span class="literal">True</span>)  <span class="comment"># executes a graph, with dropout</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个使用了defun的back propagation例子如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.train.GradientDescentOptimizer()</span><br><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    outputs = model(x)</span><br><span class="line">gradient = tape.gradient(outputs, model.trainable_variables)</span><br><span class="line">defun_gradients = tfe.defun(gradient)</span><br><span class="line">tfe.defun(optimizer.apply_gradients((grad, var) <span class="keyword">for</span> grad, </span><br><span class="line">                var <span class="keyword">in</span> zip(gradient,model.trainable_variables)))</span><br></pre></td></tr></table></figure>
+
+<p>然而此后<a href="https://www.tensorflow.org/api_docs/python/tf/contrib/eager/defun" target="_blank" rel="noopener">defun</a>可能会被<a href="https://medium.com/tensorflow/autograph-converts-python-into-tensorflow-graphs-b2a871f87ec7" target="_blank" rel="noopener">AutoGraph</a>替代</p>
+</li>
+</ol>
+<p>Refer:<a href="https://medium.com/tensorflow/code-with-eager-execution-run-with-graphs-optimizing-your-code-with-revnet-as-an-example-6162333f9b08?linkId=55410234" target="_blank" rel="noopener">Code with Eager Execution, Run with Graphs: Optimizing Your Code with RevNet as an Example</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/09/21/checkpoint增加一些可阅读性的操作/" rel="prev" title="checkpoint增加一些可阅读性的操作">
+      <i class="fa fa-chevron-left"></i> checkpoint增加一些可阅读性的操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/11/23/Bert-FineTune-实践/" rel="next" title="Bert FineTune 实践">
+      Bert FineTune 实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wendell Sun</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '7835aa064fbc83c57c66',
+      clientSecret: 'f025dcec53ffe435876bac77f897f444c5d188fd',
+      repo: 'gitalk_on_wendellsun_blog# Repository name to store issues',
+      owner: 'PsYear# GitHub repo owner',
+      admin: ['PsYear'],
+      id: '8390cf388aa9f983b806f9211e5524c0',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

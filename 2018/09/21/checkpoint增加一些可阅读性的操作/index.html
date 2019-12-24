@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.wendellsun.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="checkpoint增加一些可阅读性的操作checkpoint的基础使用在官方的手册里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。 checkpoint里变量名和权重值1234567891011from tensorflow.python import pywrap_tensorflowimport osmod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="checkpoint增加一些可阅读性的操作">
+<meta property="og:url" content="https://www.wendellsun.com/2018/09/21/checkpoint增加一些可阅读性的操作/index.html">
+<meta property="og:site_name" content="宋竹温 | 不羁跬步">
+<meta property="og:description" content="checkpoint增加一些可阅读性的操作checkpoint的基础使用在官方的手册里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。 checkpoint里变量名和权重值1234567891011from tensorflow.python import pywrap_tensorflowimport osmod">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-12-24T11:43:36.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="checkpoint增加一些可阅读性的操作">
+<meta name="twitter:description" content="checkpoint增加一些可阅读性的操作checkpoint的基础使用在官方的手册里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。 checkpoint里变量名和权重值1234567891011from tensorflow.python import pywrap_tensorflowimport osmod">
+
+<link rel="canonical" href="https://www.wendellsun.com/2018/09/21/checkpoint增加一些可阅读性的操作/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>checkpoint增加一些可阅读性的操作 | 宋竹温 | 不羁跬步</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宋竹温 | 不羁跬步</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">独立，客观，开放的编程师事务所</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/21/checkpoint增加一些可阅读性的操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          checkpoint增加一些可阅读性的操作
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-09-21 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-21T00:00:00+08:00">2018-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="checkpoint增加一些可阅读性的操作"><a href="#checkpoint增加一些可阅读性的操作" class="headerlink" title="checkpoint增加一些可阅读性的操作"></a>checkpoint增加一些可阅读性的操作</h3><p>checkpoint的基础使用在官方的<a href="https://www.tensorflow.org/guide/saved_model" target="_blank" rel="noopener">手册</a>里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。</p>
+<h4 id="checkpoint里变量名和权重值"><a href="#checkpoint里变量名和权重值" class="headerlink" title="checkpoint里变量名和权重值"></a>checkpoint里变量名和权重值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python <span class="keyword">import</span> pywrap_tensorflow</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line"></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">reader = pywrap_tensorflow.NewCheckpointReader(checkpoint_path)</span><br><span class="line">var_to_shape_map = reader.get_variable_to_shape_map()</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> var_to_shape_map:</span><br><span class="line">    print(<span class="string">'tensor_name: '</span>,key) <span class="comment">#变量名</span></span><br><span class="line">    print(reader.get_tensor(key)) <span class="comment">#变量值</span></span><br></pre></td></tr></table></figure>
+
+<p>在ckpt文件里的变量有两类，一类是进行前馈的权重，另一类是在后馈时的梯度。同时有一些变量并不是此前在构建模型时声明的，而是在实现各类模型api时自动产生的，通常这类变量会根据参数产生W和bias。对于包含多步线性计算的cell即各类RNN的cell而言，W会被整合成一个名为kernel的变量，其tensor大小将根据具体的计算方式生成，如lstm的kernel变量大小为(input_dim+lstm_dim,4*lstm_dim)。</p>
+<h4 id="sess里变量读取预训练权重"><a href="#sess里变量读取预训练权重" class="headerlink" title="sess里变量读取预训练权重"></a>sess里变量读取预训练权重</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">sess.run(tf.local_variables_initializer())</span><br><span class="line">print_variable = [var.name <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()]</span><br><span class="line">print(print_variable)</span><br></pre></td></tr></table></figure>
+
+<p>因为ckpt读取变量需要新变量和ckpt里的变量名字完全一致，所以可以通过上述代码查看变量名是否满足条件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">variables_to_restore = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()</span><br><span class="line">    <span class="keyword">if</span> var.name==<span class="string">'bias:0'</span> <span class="keyword">or</span> var.name==<span class="string">'kernel:0'</span>]</span><br><span class="line">saver = tf.train.Saver(variables_to_restore)</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">saver.restore(self.sess,checkpoint_path)</span><br></pre></td></tr></table></figure>
+
+<p>通过在saver初始化时传入需要读取的参数，可以控制restore哪些变量。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/09/13/estimator的简单使用方式/" rel="prev" title="estimator的简单使用方式">
+      <i class="fa fa-chevron-left"></i> estimator的简单使用方式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/10/12/用Graphs的运行方式执行Eager模式的代码/" rel="next" title="用Graphs的运行方式执行Eager模式的代码">
+      用Graphs的运行方式执行Eager模式的代码 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wendell Sun</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '7835aa064fbc83c57c66',
+      clientSecret: 'f025dcec53ffe435876bac77f897f444c5d188fd',
+      repo: 'gitalk_on_wendellsun_blog# Repository name to store issues',
+      owner: 'PsYear# GitHub repo owner',
+      admin: ['PsYear'],
+      id: '6bb8d62003f17af17246a81e7b53d693',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

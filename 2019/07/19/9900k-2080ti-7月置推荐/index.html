@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.wendellsun.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="中央处理单元-CPUcpu 的话消费顶级选择当然不止intel 9900k,另一个可以选择的是7月新出的AMD 3900x， 价格两者差不多（4k左右）。从数据上看 3900x的核心和线程数都比较高，（9900k-8核16线程 | 3900x-12核24线程）但一方面是我对amd 的处理器不太了解，主板选择上和内存支持上可能没有太大把握，同时由于本月新品的原因，配套主板的价格特别高。另一方面实际游">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9900k+2080ti 7月推荐配置">
+<meta property="og:url" content="https://www.wendellsun.com/2019/07/19/9900k-2080ti-7月置推荐/index.html">
+<meta property="og:site_name" content="宋竹温 | 不羁跬步">
+<meta property="og:description" content="中央处理单元-CPUcpu 的话消费顶级选择当然不止intel 9900k,另一个可以选择的是7月新出的AMD 3900x， 价格两者差不多（4k左右）。从数据上看 3900x的核心和线程数都比较高，（9900k-8核16线程 | 3900x-12核24线程）但一方面是我对amd 的处理器不太了解，主板选择上和内存支持上可能没有太大把握，同时由于本月新品的原因，配套主板的价格特别高。另一方面实际游">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/PsYear/PictureCloud/master/9900k%2B2080ti%E9%85%8D%E7%BD%AE%E6%8E%A8%E8%8D%90.jpg">
+<meta property="og:updated_time" content="2019-12-24T11:43:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9900k+2080ti 7月推荐配置">
+<meta name="twitter:description" content="中央处理单元-CPUcpu 的话消费顶级选择当然不止intel 9900k,另一个可以选择的是7月新出的AMD 3900x， 价格两者差不多（4k左右）。从数据上看 3900x的核心和线程数都比较高，（9900k-8核16线程 | 3900x-12核24线程）但一方面是我对amd 的处理器不太了解，主板选择上和内存支持上可能没有太大把握，同时由于本月新品的原因，配套主板的价格特别高。另一方面实际游">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/PsYear/PictureCloud/master/9900k%2B2080ti%E9%85%8D%E7%BD%AE%E6%8E%A8%E8%8D%90.jpg">
+
+<link rel="canonical" href="https://www.wendellsun.com/2019/07/19/9900k-2080ti-7月置推荐/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>9900k+2080ti 7月推荐配置 | 宋竹温 | 不羁跬步</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宋竹温 | 不羁跬步</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">独立，客观，开放的编程师事务所</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2019/07/19/9900k-2080ti-7月置推荐/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          9900k+2080ti 7月推荐配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-19 13:28:27" itemprop="dateCreated datePublished" datetime="2019-07-19T13:28:27+08:00">2019-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="中央处理单元-CPU"><a href="#中央处理单元-CPU" class="headerlink" title="中央处理单元-CPU"></a>中央处理单元-CPU</h3><p>cpu 的话消费顶级选择当然不止intel 9900k,另一个可以选择的是7月新出的AMD 3900x， 价格两者差不多（4k左右）。从数据上看 3900x的核心和线程数都比较高，（9900k-8核16线程 | 3900x-12核24线程）但一方面是我对amd 的处理器不太了解，主板选择上和内存支持上可能没有太大把握，同时由于本月新品的原因，配套主板的价格特别高。另一方面实际游戏测试表现来看默频下，9900k略胜3900x一筹（平均高出6%），超频下9900k（5ghz）还是略胜3900x(auto)一筹（平均高出5%,但9900k超频空间大很多)。所以游戏娱乐来看现在买9900k还是一个比较好的选择，至于专业视频制作和数据处理3900x因为核心线程的领先表现可能会好一点。</p>
+<p>Refer：<a href="https://www.techspot.com/review/1877-core-i9-9900k-vs-ryzen-9-3900x/" target="_blank" rel="noopener">9900k和3900x游戏性能对比</a></p>
+<h3 id="主板-Motherboard"><a href="#主板-Motherboard" class="headerlink" title="主板-Motherboard"></a>主板-Motherboard</h3><p>主板的话 如果不超频的话微星的暗黑版本就够用了，但是m2接口和供电还是寒酸了一点，如果后续要加m2硬盘会少一两个，用微星战神ace的话如果超频的话供电能更稳定一点，i/o和硬盘接口更丰富一点，毕竟现在主板一键超频还是比较容易的，超频不是很复杂。华硕的rog m11h 和 微星 战神 ace差不多，但有rog的灯效和品牌加成，不过如果选择rog 我比较建议再加一点钱到 m11a，rog的顶级供电，可以挑战一波液氮超频。 美观的话rog m11f比较好看<br>如果选微星暗黑注意下只有结尾带ac的是自带无线网卡和蓝牙的。</p>
+<p>Refer：<a href="https://www.bhphotovideo.com/c/compare/MSI_MPG_Z390_GAMING_PRO_CARBON_AC_vs_ASUS_MAXIMUS_IX_HERO_vs_ASUS_ROG_MAXIMUS_XI_EXTREME_vs_MSI_MEG_Z390_ACE/BHitems/1437832-REG_1438191-REG_1444349-REG_1437827-REG" target="_blank" rel="noopener">msi carbon | msi ace | rog m11h |rog m11e主板对比</a></p>
+<h3 id="图形处理单元-GPU"><a href="#图形处理单元-GPU" class="headerlink" title="图形处理单元-GPU"></a>图形处理单元-GPU</h3><p>gpu的话是十分价钱一分货，一千块一两帧的差距吧，1w左右的看造型选就行了，如果还是比较看中频率的话微星魔龙在这个价位有一点点优势，建议主板和显卡选择同品牌的，这样在软件监控管理上稍微方便一点点。如果主板选了rog，显卡可以选rog的猛禽。</p>
+<h3 id="内存-Memory"><a href="#内存-Memory" class="headerlink" title="内存-Memory"></a>内存-Memory</h3><p>内存的话有两个方向一个是追求空间的16g双通道，另一个是追求频率的8g双通道，性能上高频率的8g双通道在游戏上表现会好一点（10%以内），一张主板能插四条内存，性能要求高又对空间要求不太高（不跑大数据处理和高分辨率的影视动画制作）4个8gb的绝对够用了，如果空间要求比较大还是16g的内存吧(rog 主板是只有两个内存槽 除了m11e)</p>
+<h3 id="硬盘-Disk"><a href="#硬盘-Disk" class="headerlink" title="硬盘-Disk"></a>硬盘-Disk</h3><p>硬盘的话不太知道你原来硬盘的型号，主控颗粒还是新硬盘好一点，4k读写能快很多，建议还是用新m2硬盘装个系统500g或者250g的都可以，但500g的性能会好一点。硬盘的话价格高的在跑分上还是比较明显的，但使用感受区别不大。而且硬盘不太保值，换起来又方便，随用随换可能比较好一点。</p>
+<h3 id="电源-Power"><a href="#电源-Power" class="headerlink" title="电源-Power"></a>电源-Power</h3><p>电源 如果打算5年后下一台电脑接着用的话可以用1000w的电源，质保时限都是ok的，850w其实也够下一台用，但余量不一定够，不过电源用得太久也不一定100%稳定。至于rog的雷神用的是同款海韵电源的带灯贴皮，不过一般机箱电源位都是带仓包起来的，所以带了灯可能也看不见。</p>
+<h3 id="散热-CPU-Cooler"><a href="#散热-CPU-Cooler" class="headerlink" title="散热-CPU Cooler"></a>散热-CPU Cooler</h3><p>散热我查了一下，水冷有几个5年损坏全赔的，可以具体问一下客服，就是如果漏夜造成你机箱损伤他们会折旧赔其他部件比如cpu/gpu的钱。9900k的发热量还是比较大的，如果用风冷真的是装一个硕大硕大的散热塔，还得有额外的承重架来支撑一下（不过显卡估计也会需要支撑架），水冷能让机箱整洁一点。不过水冷不太好带到日本，路上颠簸说不定就影响整体密封性了。不管选水冷还是风冷都要注意机箱尺寸，水冷一般机箱描述会写有支持360冷排，风冷的话最好问一下客服猫头鹰或大霜塔能不能装进去，而且还要注意会不会挡住主板的一些接口位置</p>
+<h3 id="机箱-Computer-Case"><a href="#机箱-Computer-Case" class="headerlink" title="机箱-Computer Case"></a>机箱-Computer Case</h3><p>机箱 注意支持主板大小是不是支持atx主板，前面板对type-c有没有要求（rog m11h主板不支持机箱前面板的type-c），散热装不装得下，别的就没什么了，主要还是看你对造型的喜好。我个人觉得rog 太阳神这样就还行。但你最好多挑挑，毕竟低头不见抬头见</p>
+<p>参考推荐表—<a href="https://docs.google.com/spreadsheets/d/1khBTbdek9qIB4ak9juU6ajG2TTHB3lIDeFttdxKnS_o/edit?usp=sharing" target="_blank" rel="noopener">9900k+2080ti 7月简单推荐配置</a><br><img src="https://raw.githubusercontent.com/PsYear/PictureCloud/master/9900k%2B2080ti%E9%85%8D%E7%BD%AE%E6%8E%A8%E8%8D%90.jpg" alt="9900k+2080ti 7月简单推荐配置"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/04/利器/" rel="prev" title="利器">
+      <i class="fa fa-chevron-left"></i> 利器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/24/test-12-24/" rel="next" title="test 12-24">
+      test 12-24 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wendell Sun</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '7835aa064fbc83c57c66',
+      clientSecret: 'f025dcec53ffe435876bac77f897f444c5d188fd',
+      repo: 'gitalk_on_wendellsun_blog# Repository name to store issues',
+      owner: 'PsYear# GitHub repo owner',
+      admin: ['PsYear'],
+      id: '86a8f504e301cf5d91e7d152f2d6e8f4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
