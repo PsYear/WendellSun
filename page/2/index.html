@@ -211,6 +211,79 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/13/estimator的简单使用方式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/13/estimator的简单使用方式/" class="post-title-link" itemprop="url">estimator的简单使用方式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-13T00:00:00+08:00">2018-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="estimator的简单使用方式"><a href="#estimator的简单使用方式" class="headerlink" title="estimator的简单使用方式"></a>estimator的简单使用方式</h3><p><a href="https://www.tensorflow.org/programmers_guide/estimators?hl=zh-cn" target="_blank" rel="noopener">estimator</a>的官方使用方式介绍了使用自定义的estimator的model，没有涉及到从keras的model来使用estimator。<br>主要的使用方式来自这篇<a href="https://github.com/kashif/tf-keras-tutorial/blob/master/7-estimators-multi-gpus.ipynb" target="_blank" rel="noopener">notebook</a>在使用的时候没有遇上太多障碍。<br>但有一些细节花了一点时间去调试。<br>比如estimator能按照dataset重复次数<code>dataset.repeat(n)</code>作为epoch，因此如果直接使用<code>dataset.repeat()</code>会在训练时陷入死循环。</p>
+<h4 id="model-fn的处理"><a href="#model-fn的处理" class="headerlink" title="model_fn的处理"></a>model_fn的处理</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_fn</span><span class="params">(features, labels, mode)</span>:</span></span><br><span class="line">    keras_estimator_obj = tf.keras.estimator.model_to_estimator(</span><br><span class="line">        keras_model=base_model,</span><br><span class="line">        model_dir=&lt;model_dir&gt;,</span><br><span class="line">        config=&lt;run_config&gt;,</span><br><span class="line">    ) </span><br><span class="line"></span><br><span class="line">    <span class="comment"># pull model_fn that we need (hack)</span></span><br><span class="line">    <span class="keyword">return</span> keras_estimator_obj._model_fn</span><br></pre></td></tr></table></figure>
+
+<p>通过传递参数是无法打印更多的训练结果，但是可以通过创建一个logging hook来让estimator运行。<br>In the body of model_fn function for your estimator:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logging_hook = tf.train.LoggingTensorHook(&#123;<span class="string">"loss"</span> : loss, </span><br><span class="line">    <span class="string">"accuracy"</span> : accuracy&#125;, every_n_iter=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Rest of the function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> tf.estimator.EstimatorSpec(</span><br><span class="line">    ...params...</span><br><span class="line">    training_hooks = [logging_hook])</span><br></pre></td></tr></table></figure>
+
+<p>除了<code>self.estimator.train()</code>以外,可以使用<code>tf.estimator.train_and_evaluate()</code>对<code>train</code>和<code>evaluate</code>进行更精细地操作。  </p>
+<p>此外<code>add_metrics(estimator,my_auc)</code>只是把metrics加入到最终结果的输出里，而不是每一次step，对于每一次step需要在<code>EstimatorSpec(training_hook=[logging_hook])</code>里添加logging_hook</p>
+<p>多gpu出现的<br>All hooks must be SessionRunHook instances问题在<a href="https://github.com/tensorflow/tensorflow/issues/21444" target="_blank" rel="noopener">#issues21444</a> 里解决，等待tf-1.11版本。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
     <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/02/在keras中使用tf-dataset作为输入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">

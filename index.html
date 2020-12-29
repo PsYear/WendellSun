@@ -214,6 +214,67 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2020/12/29/不丧23期关于偶像的节目有感/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/29/不丧23期关于偶像的节目有感/" class="post-title-link" itemprop="url">「不丧【日更23】：追星」节目有感</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-29 16:16:19 / Modified: 16:22:48" itemprop="dateCreated datePublished" datetime="2020-12-29T16:16:19+08:00">2020-12-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在收听不丧<a href="https://www.busangpodcast.com/episodes/movie-tv-shows-summary" target="_blank" rel="noopener">日更22期：年度影视节目回顾</a>的时候，非常意外地听到两位主播今年最喜欢的纪录片里面竟然有《互联网之子》。更没想到紧接着在<a href="https://www.busangpodcast.com/episodes/idol" target="_blank" rel="noopener">日更23期：追星</a>的时候会聊到偶像。这两期节目直接就让我想记录一下Aaron Swartz对我的影响。从偶像的角度来说，Aaron Swartz一直以来，都是对我影响非常大的程序开发偶像。他那种对于信息分享和传播的探索，对于权威、封闭商业版权挑战的勇气，一直都能给我带来感动。每当想起他，都会激动地涌现出跟随他脚步的力量和憧憬。很难想象如果Aaron仍然在世，会不会用一种新形式，来挑战如今各式各样封闭的互联网商业城墙。</p>
+<p>程序开发这个行业最与众不同的是，几乎所有问题的解决方案，在开源社区里都有免费的替代品，整个开源社区是无数像Aaron这样才华横溢的人，无私地奉献出智慧的结晶，越是纯粹的技术人越是怀揣这种贡献开源社区的理想主义和浪漫。一直感觉很幸运，在最年轻，如同一张白纸的时候认识了Aaron Swartz。让我能懂得这种理想主义下信息传播的不易，以及能始终对每一个如同Aaron这样，坚持古典互联网精神的人，满怀敬意。如果没有他和他的传奇故事，可能我仍会迷茫技术的价值和意义，沉迷在自己代码库里，尝试各种各样换皮的手段，添加一个又一个只用来薅流量，但毫无意义的「广告分发器」。</p>
+<p>Aaron让我看到「Don’t be evil」下，技术的上限和力量。年轻的离世让人惋惜，但起码不是屠龙勇士成为恶龙的绝望循环。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
     <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2020/03/31/尝无止尽路由/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -605,7 +666,7 @@
 
       
           
-    <div id="aplayer-gEoFJLXO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div>
+    <div id="aplayer-hvzKKKrj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div>
 
 
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>
@@ -876,79 +937,6 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">variables_to_restore = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()</span><br><span class="line">    <span class="keyword">if</span> var.name==<span class="string">'bias:0'</span> <span class="keyword">or</span> var.name==<span class="string">'kernel:0'</span>]</span><br><span class="line">saver = tf.train.Saver(variables_to_restore)</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">saver.restore(self.sess,checkpoint_path)</span><br></pre></td></tr></table></figure>
 
 <p>通过在saver初始化时传入需要读取的参数，可以控制restore哪些变量。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
-    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/13/estimator的简单使用方式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Wendell Sun">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宋竹温 | 不羁跬步">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/13/estimator的简单使用方式/" class="post-title-link" itemprop="url">estimator的简单使用方式</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-13T00:00:00+08:00">2018-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="estimator的简单使用方式"><a href="#estimator的简单使用方式" class="headerlink" title="estimator的简单使用方式"></a>estimator的简单使用方式</h3><p><a href="https://www.tensorflow.org/programmers_guide/estimators?hl=zh-cn" target="_blank" rel="noopener">estimator</a>的官方使用方式介绍了使用自定义的estimator的model，没有涉及到从keras的model来使用estimator。<br>主要的使用方式来自这篇<a href="https://github.com/kashif/tf-keras-tutorial/blob/master/7-estimators-multi-gpus.ipynb" target="_blank" rel="noopener">notebook</a>在使用的时候没有遇上太多障碍。<br>但有一些细节花了一点时间去调试。<br>比如estimator能按照dataset重复次数<code>dataset.repeat(n)</code>作为epoch，因此如果直接使用<code>dataset.repeat()</code>会在训练时陷入死循环。</p>
-<h4 id="model-fn的处理"><a href="#model-fn的处理" class="headerlink" title="model_fn的处理"></a>model_fn的处理</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_fn</span><span class="params">(features, labels, mode)</span>:</span></span><br><span class="line">    keras_estimator_obj = tf.keras.estimator.model_to_estimator(</span><br><span class="line">        keras_model=base_model,</span><br><span class="line">        model_dir=&lt;model_dir&gt;,</span><br><span class="line">        config=&lt;run_config&gt;,</span><br><span class="line">    ) </span><br><span class="line"></span><br><span class="line">    <span class="comment"># pull model_fn that we need (hack)</span></span><br><span class="line">    <span class="keyword">return</span> keras_estimator_obj._model_fn</span><br></pre></td></tr></table></figure>
-
-<p>通过传递参数是无法打印更多的训练结果，但是可以通过创建一个logging hook来让estimator运行。<br>In the body of model_fn function for your estimator:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logging_hook = tf.train.LoggingTensorHook(&#123;<span class="string">"loss"</span> : loss, </span><br><span class="line">    <span class="string">"accuracy"</span> : accuracy&#125;, every_n_iter=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Rest of the function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> tf.estimator.EstimatorSpec(</span><br><span class="line">    ...params...</span><br><span class="line">    training_hooks = [logging_hook])</span><br></pre></td></tr></table></figure>
-
-<p>除了<code>self.estimator.train()</code>以外,可以使用<code>tf.estimator.train_and_evaluate()</code>对<code>train</code>和<code>evaluate</code>进行更精细地操作。  </p>
-<p>此外<code>add_metrics(estimator,my_auc)</code>只是把metrics加入到最终结果的输出里，而不是每一次step，对于每一次step需要在<code>EstimatorSpec(training_hook=[logging_hook])</code>里添加logging_hook</p>
-<p>多gpu出现的<br>All hooks must be SessionRunHook instances问题在<a href="https://github.com/tensorflow/tensorflow/issues/21444" target="_blank" rel="noopener">#issues21444</a> 里解决，等待tf-1.11版本。</p>
 
       
     </div>

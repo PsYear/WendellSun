@@ -8,8 +8,30 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 31 Mar 2020 12:12:35 GMT</pubDate>
+    <pubDate>Tue, 29 Dec 2020 08:22:48 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>「不丧【日更23】：追星」节目有感</title>
+      <link>https://www.wendellsun.com/2020/12/29/%E4%B8%8D%E4%B8%A723%E6%9C%9F%E5%85%B3%E4%BA%8E%E5%81%B6%E5%83%8F%E7%9A%84%E8%8A%82%E7%9B%AE%E6%9C%89%E6%84%9F/</link>
+      <guid>https://www.wendellsun.com/2020/12/29/%E4%B8%8D%E4%B8%A723%E6%9C%9F%E5%85%B3%E4%BA%8E%E5%81%B6%E5%83%8F%E7%9A%84%E8%8A%82%E7%9B%AE%E6%9C%89%E6%84%9F/</guid>
+      <pubDate>Tue, 29 Dec 2020 08:16:19 GMT</pubDate>
+      <description>
+      
+        
+        
+          
+          
+            &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;sc
+          
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>在收听不丧<a href="https://www.busangpodcast.com/episodes/movie-tv-shows-summary" target="_blank" rel="noopener">日更22期：年度影视节目回顾</a>的时候，非常意外地听到两位主播今年最喜欢的纪录片里面竟然有《互联网之子》。更没想到紧接着在<a href="https://www.busangpodcast.com/episodes/idol" target="_blank" rel="noopener">日更23期：追星</a>的时候会聊到偶像。这两期节目直接就让我想记录一下Aaron Swartz对我的影响。从偶像的角度来说，Aaron Swartz一直以来，都是对我影响非常大的程序开发偶像。他那种对于信息分享和传播的探索，对于权威、封闭商业版权挑战的勇气，一直都能给我带来感动。每当想起他，都会激动地涌现出跟随他脚步的力量和憧憬。很难想象如果Aaron仍然在世，会不会用一种新形式，来挑战如今各式各样封闭的互联网商业城墙。</p><p>程序开发这个行业最与众不同的是，几乎所有问题的解决方案，在开源社区里都有免费的替代品，整个开源社区是无数像Aaron这样才华横溢的人，无私地奉献出智慧的结晶，越是纯粹的技术人越是怀揣这种贡献开源社区的理想主义和浪漫。一直感觉很幸运，在最年轻，如同一张白纸的时候认识了Aaron Swartz。让我能懂得这种理想主义下信息传播的不易，以及能始终对每一个如同Aaron这样，坚持古典互联网精神的人，满怀敬意。如果没有他和他的传奇故事，可能我仍会迷茫技术的价值和意义，沉迷在自己代码库里，尝试各种各样换皮的手段，添加一个又一个只用来薅流量，但毫无意义的「广告分发器」。</p><p>Aaron让我看到「Don’t be evil」下，技术的上限和力量。年轻的离世让人惋惜，但起码不是屠龙勇士成为恶龙的绝望循环。</p>]]></content:encoded>
+      
+      <comments>https://www.wendellsun.com/2020/12/29/%E4%B8%8D%E4%B8%A723%E6%9C%9F%E5%85%B3%E4%BA%8E%E5%81%B6%E5%83%8F%E7%9A%84%E8%8A%82%E7%9B%AE%E6%9C%89%E6%84%9F/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>尝无止尽路由</title>
@@ -138,7 +160,7 @@
       
       </description>
       
-      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>    <div id="aplayer-gEoFJLXO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>]]></content:encoded>
+      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>    <div id="aplayer-hvzKKKrj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>]]></content:encoded>
       
       <comments>https://www.wendellsun.com/2019/07/02/%E3%80%8CThe-score%E3%80%8D%E6%84%8F%E5%A4%96%E5%B0%8F%E4%BC%97%E7%9A%84%E6%B5%81%E8%A1%8C%E6%91%87%E6%BB%9A%E7%BB%84%E5%90%88/#disqus_thread</comments>
     </item>
@@ -207,28 +229,6 @@
       <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="checkpoint增加一些可阅读性的操作"><a href="#checkpoint增加一些可阅读性的操作" class="headerlink" title="checkpoint增加一些可阅读性的操作"></a>checkpoint增加一些可阅读性的操作</h3><p>checkpoint的基础使用在官方的<a href="https://www.tensorflow.org/guide/saved_model" target="_blank" rel="noopener">手册</a>里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。</p><h4 id="checkpoint里变量名和权重值"><a href="#checkpoint里变量名和权重值" class="headerlink" title="checkpoint里变量名和权重值"></a>checkpoint里变量名和权重值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python <span class="keyword">import</span> pywrap_tensorflow</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line"></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">reader = pywrap_tensorflow.NewCheckpointReader(checkpoint_path)</span><br><span class="line">var_to_shape_map = reader.get_variable_to_shape_map()</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> var_to_shape_map:</span><br><span class="line">    print(<span class="string">'tensor_name: '</span>,key) <span class="comment">#变量名</span></span><br><span class="line">    print(reader.get_tensor(key)) <span class="comment">#变量值</span></span><br></pre></td></tr></table></figure><p>在ckpt文件里的变量有两类，一类是进行前馈的权重，另一类是在后馈时的梯度。同时有一些变量并不是此前在构建模型时声明的，而是在实现各类模型api时自动产生的，通常这类变量会根据参数产生W和bias。对于包含多步线性计算的cell即各类RNN的cell而言，W会被整合成一个名为kernel的变量，其tensor大小将根据具体的计算方式生成，如lstm的kernel变量大小为(input_dim+lstm_dim,4*lstm_dim)。</p><h4 id="sess里变量读取预训练权重"><a href="#sess里变量读取预训练权重" class="headerlink" title="sess里变量读取预训练权重"></a>sess里变量读取预训练权重</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">sess.run(tf.local_variables_initializer())</span><br><span class="line">print_variable = [var.name <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()]</span><br><span class="line">print(print_variable)</span><br></pre></td></tr></table></figure><p>因为ckpt读取变量需要新变量和ckpt里的变量名字完全一致，所以可以通过上述代码查看变量名是否满足条件。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">variables_to_restore = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()</span><br><span class="line">    <span class="keyword">if</span> var.name==<span class="string">'bias:0'</span> <span class="keyword">or</span> var.name==<span class="string">'kernel:0'</span>]</span><br><span class="line">saver = tf.train.Saver(variables_to_restore)</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">saver.restore(self.sess,checkpoint_path)</span><br></pre></td></tr></table></figure><p>通过在saver初始化时传入需要读取的参数，可以控制restore哪些变量。</p>]]></content:encoded>
       
       <comments>https://www.wendellsun.com/2018/09/21/checkpoint%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%BA%9B%E5%8F%AF%E9%98%85%E8%AF%BB%E6%80%A7%E7%9A%84%E6%93%8D%E4%BD%9C/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>estimator的简单使用方式</title>
-      <link>https://www.wendellsun.com/2018/09/13/estimator%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/</link>
-      <guid>https://www.wendellsun.com/2018/09/13/estimator%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/</guid>
-      <pubDate>Wed, 12 Sep 2018 16:00:00 GMT</pubDate>
-      <description>
-      
-        
-        
-          
-          
-            &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;sc
-          
-        
-      
-      </description>
-      
-      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="estimator的简单使用方式"><a href="#estimator的简单使用方式" class="headerlink" title="estimator的简单使用方式"></a>estimator的简单使用方式</h3><p><a href="https://www.tensorflow.org/programmers_guide/estimators?hl=zh-cn" target="_blank" rel="noopener">estimator</a>的官方使用方式介绍了使用自定义的estimator的model，没有涉及到从keras的model来使用estimator。<br>主要的使用方式来自这篇<a href="https://github.com/kashif/tf-keras-tutorial/blob/master/7-estimators-multi-gpus.ipynb" target="_blank" rel="noopener">notebook</a>在使用的时候没有遇上太多障碍。<br>但有一些细节花了一点时间去调试。<br>比如estimator能按照dataset重复次数<code>dataset.repeat(n)</code>作为epoch，因此如果直接使用<code>dataset.repeat()</code>会在训练时陷入死循环。</p><h4 id="model-fn的处理"><a href="#model-fn的处理" class="headerlink" title="model_fn的处理"></a>model_fn的处理</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_fn</span><span class="params">(features, labels, mode)</span>:</span></span><br><span class="line">    keras_estimator_obj = tf.keras.estimator.model_to_estimator(</span><br><span class="line">        keras_model=base_model,</span><br><span class="line">        model_dir=&lt;model_dir&gt;,</span><br><span class="line">        config=&lt;run_config&gt;,</span><br><span class="line">    ) </span><br><span class="line"></span><br><span class="line">    <span class="comment"># pull model_fn that we need (hack)</span></span><br><span class="line">    <span class="keyword">return</span> keras_estimator_obj._model_fn</span><br></pre></td></tr></table></figure><p>通过传递参数是无法打印更多的训练结果，但是可以通过创建一个logging hook来让estimator运行。<br>In the body of model_fn function for your estimator:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logging_hook = tf.train.LoggingTensorHook(&#123;<span class="string">"loss"</span> : loss, </span><br><span class="line">    <span class="string">"accuracy"</span> : accuracy&#125;, every_n_iter=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Rest of the function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> tf.estimator.EstimatorSpec(</span><br><span class="line">    ...params...</span><br><span class="line">    training_hooks = [logging_hook])</span><br></pre></td></tr></table></figure><p>除了<code>self.estimator.train()</code>以外,可以使用<code>tf.estimator.train_and_evaluate()</code>对<code>train</code>和<code>evaluate</code>进行更精细地操作。  </p><p>此外<code>add_metrics(estimator,my_auc)</code>只是把metrics加入到最终结果的输出里，而不是每一次step，对于每一次step需要在<code>EstimatorSpec(training_hook=[logging_hook])</code>里添加logging_hook</p><p>多gpu出现的<br>All hooks must be SessionRunHook instances问题在<a href="https://github.com/tensorflow/tensorflow/issues/21444" target="_blank" rel="noopener">#issues21444</a> 里解决，等待tf-1.11版本。</p>]]></content:encoded>
-      
-      <comments>https://www.wendellsun.com/2018/09/13/estimator%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/#disqus_thread</comments>
     </item>
     
   </channel>
