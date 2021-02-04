@@ -211,6 +211,182 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/10/12/用Graphs的运行方式执行Eager模式的代码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/12/用Graphs的运行方式执行Eager模式的代码/" class="post-title-link" itemprop="url">用Graphs的运行方式执行Eager模式的代码</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-12T00:00:00+08:00">2018-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、在执行代码时使用 <code>tf.enable_eager_execution()</code> 开启eager模式</p>
+<p>二、正向传播支持自定义class类型  </p>
+<ol>
+<li><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L99" target="_blank" rel="noopener">定义</a>的model继承keras.model<br></li>
+<li>在<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L110" target="_blank" rel="noopener"><strong>init</strong>()</a>里定义所用到的layer类型<br></li>
+<li>在<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L133" target="_blank" rel="noopener">call()</a>里连接layer，返回<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L146" target="_blank" rel="noopener">output</a><br></li>
+</ol>
+<p>二、反向传播的使用  </p>
+<ol>
+<li><p>先用tf的api定义<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L158" target="_blank" rel="noopener">loss函数</a><br></p>
+</li>
+<li><p>用tfe的<a href="https://www.tensorflow.org/api_docs/python/tf/contrib/eager/implicit_gradients" target="_blank" rel="noopener">api</a>调用loss得到梯度grads  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tfe.gradients_function(loss,x)</span><br><span class="line">tfe.implicit_gradients(loss)</span><br></pre></td></tr></table></figure>
+
+<p>或者也可以采用<a href="https://www.tensorflow.org/api_docs/python/tf/GradientTape" target="_blank" rel="noopener">GradientTape(y,x)</a>来进行计算可以根据函数y计算变量x的梯  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> grad_tape:</span><br><span class="line">    grad_tape.gradient(y,x)</span><br></pre></td></tr></table></figure>
+
+<p>在tf的诸多eager execution样例中里用第二种方法较多  </p>
+</li>
+<li><p>用tf定义的<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py#L317" target="_blank" rel="noopener">optimizer</a>优化梯度更新参数  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer.apply_gradients(grad)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>三、Eager的输入使用<code>tf.data.Dataset</code>但不支持<code>placeholder</code>和<code>string_input_producer</code>这类在graph模式中使用的输入</p>
+<p>四、使用<code>tf.train.Checkpoint()</code><a href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint" target="_blank" rel="noopener">保存</a>模型的checkpoint</p>
+<p>五、可以使用<code>tf.contrib.eager.defun</code>对python的函数进行封装转换成图的形式进行运算。用eager的写法可以实现graph的运算速度。  </p>
+<ol>
+<li><p>使用了defun的forward propagation例子如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.call = tf.contrib.eager.defun(model.call)</span><br><span class="line">model(x, training=<span class="literal">True</span>)  <span class="comment"># executes a graph, with dropout</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个使用了defun的back propagation例子如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.train.GradientDescentOptimizer()</span><br><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    outputs = model(x)</span><br><span class="line">gradient = tape.gradient(outputs, model.trainable_variables)</span><br><span class="line">defun_gradients = tfe.defun(gradient)</span><br><span class="line">tfe.defun(optimizer.apply_gradients((grad, var) <span class="keyword">for</span> grad, </span><br><span class="line">                var <span class="keyword">in</span> zip(gradient,model.trainable_variables)))</span><br></pre></td></tr></table></figure>
+
+<p>然而此后<a href="https://www.tensorflow.org/api_docs/python/tf/contrib/eager/defun" target="_blank" rel="noopener">defun</a>可能会被<a href="https://medium.com/tensorflow/autograph-converts-python-into-tensorflow-graphs-b2a871f87ec7" target="_blank" rel="noopener">AutoGraph</a>替代</p>
+</li>
+</ol>
+<p>Refer:<a href="https://medium.com/tensorflow/code-with-eager-execution-run-with-graphs-optimizing-your-code-with-revnet-as-an-example-6162333f9b08?linkId=55410234" target="_blank" rel="noopener">Code with Eager Execution, Run with Graphs: Optimizing Your Code with RevNet as an Example</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/21/checkpoint增加一些可阅读性的操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/21/checkpoint增加一些可阅读性的操作/" class="post-title-link" itemprop="url">checkpoint增加一些可阅读性的操作</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-09-21 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-21T00:00:00+08:00">2018-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="checkpoint增加一些可阅读性的操作"><a href="#checkpoint增加一些可阅读性的操作" class="headerlink" title="checkpoint增加一些可阅读性的操作"></a>checkpoint增加一些可阅读性的操作</h3><p>checkpoint的基础使用在官方的<a href="https://www.tensorflow.org/guide/saved_model" target="_blank" rel="noopener">手册</a>里描述地比较清楚了。但在进行迁移学习时，需要对一些预训练的权重进行读取，因此如果能可阅读得打印一些变量，可以使得读取过程变得简捷便利。</p>
+<h4 id="checkpoint里变量名和权重值"><a href="#checkpoint里变量名和权重值" class="headerlink" title="checkpoint里变量名和权重值"></a>checkpoint里变量名和权重值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python <span class="keyword">import</span> pywrap_tensorflow</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line"></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">reader = pywrap_tensorflow.NewCheckpointReader(checkpoint_path)</span><br><span class="line">var_to_shape_map = reader.get_variable_to_shape_map()</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> var_to_shape_map:</span><br><span class="line">    print(<span class="string">'tensor_name: '</span>,key) <span class="comment">#变量名</span></span><br><span class="line">    print(reader.get_tensor(key)) <span class="comment">#变量值</span></span><br></pre></td></tr></table></figure>
+
+<p>在ckpt文件里的变量有两类，一类是进行前馈的权重，另一类是在后馈时的梯度。同时有一些变量并不是此前在构建模型时声明的，而是在实现各类模型api时自动产生的，通常这类变量会根据参数产生W和bias。对于包含多步线性计算的cell即各类RNN的cell而言，W会被整合成一个名为kernel的变量，其tensor大小将根据具体的计算方式生成，如lstm的kernel变量大小为(input_dim+lstm_dim,4*lstm_dim)。</p>
+<h4 id="sess里变量读取预训练权重"><a href="#sess里变量读取预训练权重" class="headerlink" title="sess里变量读取预训练权重"></a>sess里变量读取预训练权重</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">sess.run(tf.local_variables_initializer())</span><br><span class="line">print_variable = [var.name <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()]</span><br><span class="line">print(print_variable)</span><br></pre></td></tr></table></figure>
+
+<p>因为ckpt读取变量需要新变量和ckpt里的变量名字完全一致，所以可以通过上述代码查看变量名是否满足条件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">variables_to_restore = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.global_variables()</span><br><span class="line">    <span class="keyword">if</span> var.name==<span class="string">'bias:0'</span> <span class="keyword">or</span> var.name==<span class="string">'kernel:0'</span>]</span><br><span class="line">saver = tf.train.Saver(variables_to_restore)</span><br><span class="line">model_dir = <span class="string">'dir'</span></span><br><span class="line">file_name = <span class="string">'ckptfile'</span></span><br><span class="line">checkpoint_path = os.path.join(model_dir,file_name)</span><br><span class="line">saver.restore(self.sess,checkpoint_path)</span><br></pre></td></tr></table></figure>
+
+<p>通过在saver初始化时传入需要读取的参数，可以控制restore哪些变量。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
     <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2018/09/13/estimator的简单使用方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -488,7 +664,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
