@@ -236,7 +236,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-11-23 15:51:20 / Modified: 15:58:18" itemprop="dateCreated datePublished" datetime="2021-11-23T15:51:20+08:00">2021-11-23</time>
+              <time title="Created: 2021-11-23 15:51:20 / Modified: 16:03:22" itemprop="dateCreated datePublished" datetime="2021-11-23T15:51:20+08:00">2021-11-23</time>
             </span>
 
           
@@ -265,19 +265,19 @@
 </ul>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data ()&#123;</span><br><span class="line">	  info: <span class="string">""</span> </span><br><span class="line">  &#125;</span><br><span class="line">  mounted()&#123;</span><br><span class="line">    axios.get(<span class="string">"http://www.chinanonfiction.com/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="CORS-ERROR处理"><a href="#CORS-ERROR处理" class="headerlink" title="CORS ERROR处理"></a>CORS <strong>ERROR处理</strong></h2><h3 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h3><p>想在前端直接访问内容源网站的rss(<a href="http://www.chinanonfiction.com/feed/)，但直接通过axios请求，会出现CORS的报错。" target="_blank" rel="noopener">http://www.chinanonfiction.com/feed/)，但直接通过axios请求，会出现CORS的报错。</a></p>
+<h2 id="CORS-ERROR处理"><a href="#CORS-ERROR处理" class="headerlink" title="CORS ERROR处理"></a>CORS <strong>ERROR处理</strong></h2><h3 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h3><p>想在前端直接访问内容源网站的rss(<a href="http://www.chinanonfiction.com/feed/)。" target="_blank" rel="noopener">http://www.chinanonfiction.com/feed/)。</a><br>但直接通过axios请求，会出现CORS的报错。</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">"http://www.chinanonfiction.com/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>关于CORS引发原因的进一步解释可以参考<strong><a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener">基于vue-cli3/cli4解决前端使用axios跨域问题</a> 。</strong>核心原因是浏览器的同源策略导致的。可以通过自建前端代理，避开直接请求调用。</p>
 <p><img src="https://raw.githubusercontent.com/PsYear/PicGalleryForPicgo/main/cors_error_20211123aaa.png" alt="cors_error"></p>
-<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>通过Vue的代理配置，避开浏览器硬性的同源策略。定义将访问同源的<code>http://localhots:8080/chinanonfiction/feed</code>代理转发为 <code>http://www.chinanonfiction.com/feed/</code></p>
+<p>关于CORS引发原因的进一步解释可以参考<a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener"><strong>基于vue-cli3/cli4解决前端使用axios跨域问题</strong></a> 。核心原因是浏览器的同源策略导致的。可以通过自建前端代理，避开直接请求调用。</p>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>通过Vue的代理配置，避开浏览器硬性的同源策略。<br>定义将访问同源的<code>http://localhots:8080/chinanonfiction/feed</code><br>代理转发为 <code>http://www.chinanonfiction.com/feed/</code></p>
 <ul>
-<li>在组件代码里使用代理的方式进行访问。也就是访问<code>http://localhots:8080/chinanonfiction/feed</code></li>
+<li>在组件代码里使用代理的方式进行访问。<br>也就是访问<code>http://localhots:8080/chinanonfiction/feed</code></li>
 </ul>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">"/chinanonfiction/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>在vue.config.js增加代理配置，并重写路径。也就是将<code>http://localhots:8080/chinanonfiction/feed</code>代理转发为 <code>http://www.chinanonfiction.com/chinanonfiction/feed</code> 并改写为<code>http://www.chinanonfiction.com/feed</code>。</li>
+<li>在vue.config.js增加代理配置，并重写路径。<br>也就是将<code>http://localhots:8080/chinanonfiction/feed</code><br>代理转发为 <code>http://www.chinanonfiction.com/chinanonfiction/feed</code><br>并改写为<code>http://www.chinanonfiction.com/feed</code>。</li>
 </ul>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">      proxy: &#123;</span><br><span class="line">          <span class="string">'/chinanonfiction'</span>: &#123;</span><br><span class="line">              target: <span class="string">'http://www.chinanonfiction.com'</span>,<span class="comment">// 你要请求的后端接口ip+port或者网站域名</span></span><br><span class="line">              changeOrigin: <span class="literal">true</span>,<span class="comment">// 允许跨域，在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题</span></span><br><span class="line">              ws: <span class="literal">true</span>,<span class="comment">// 开启webSocket</span></span><br><span class="line">              pathRewrite: &#123;</span><br><span class="line">                  <span class="string">'^/chinanonfiction'</span>: <span class="string">''</span>,<span class="comment">// 替换成target中的地址</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -285,8 +285,8 @@
 <li>对于多目标的请求可以通过增加对应的代理配置进行相应的访问。</li>
 </ul>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="https://www.npmjs.com/package/vue-axios" target="_blank" rel="noopener">vue-axios - npm</a></li>
-<li><strong><a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener">基于vue-cli3/cli4解决前端使用axios跨域问题</a></strong></li>
+<li><a href="https://www.npmjs.com/package/vue-axios" target="_blank" rel="noopener"><strong>vue-axios - npm</strong></a></li>
+<li><a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener"><strong>基于vue-cli3/cli4解决前端使用axios跨域问题</strong></a></li>
 <li><a href="https://github.com/PanJiaChen/vue-element-admin/issues/3285" target="_blank" rel="noopener"><strong>Cannot read property ‘split’ of null</strong></a></li>
 </ul>
 
