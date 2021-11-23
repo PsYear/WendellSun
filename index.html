@@ -97,9 +97,6 @@
   </style>
 </noscript>
 
-<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -210,6 +207,103 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2021/11/23/vue3中axios使用以及CORS-ERROR处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wendell Sun">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宋竹温 | 不羁跬步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/23/vue3中axios使用以及CORS-ERROR处理/" class="post-title-link" itemprop="url">vue3中axios使用以及CORS ERROR处理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-11-23 15:51:20 / Modified: 15:58:18" itemprop="dateCreated datePublished" datetime="2021-11-23T15:51:20+08:00">2021-11-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="axios-使用"><a href="#axios-使用" class="headerlink" title="axios 使用"></a><strong>axios 使用</strong></h2><ul>
+<li>通过npm安装axios和vue-axios。详细可见<a href="https://www.npmjs.com/package/vue-axios" target="_blank" rel="noopener">vue-axios - npm</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save axios vue-axios</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在main.js里import</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span> <span class="comment">// in Vue 3</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"><span class="keyword">import</span> VueAxios <span class="keyword">from</span> <span class="string">'vue-axios'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = Vue.createApp(App)</span><br><span class="line">app.use(VueAxios, axios)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在components里调用</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data ()&#123;</span><br><span class="line">	  info: <span class="string">""</span> </span><br><span class="line">  &#125;</span><br><span class="line">  mounted()&#123;</span><br><span class="line">    axios.get(<span class="string">"http://www.chinanonfiction.com/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CORS-ERROR处理"><a href="#CORS-ERROR处理" class="headerlink" title="CORS ERROR处理"></a>CORS <strong>ERROR处理</strong></h2><h3 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h3><p>想在前端直接访问内容源网站的rss(<a href="http://www.chinanonfiction.com/feed/)，但直接通过axios请求，会出现CORS的报错。" target="_blank" rel="noopener">http://www.chinanonfiction.com/feed/)，但直接通过axios请求，会出现CORS的报错。</a></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">"http://www.chinanonfiction.com/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>关于CORS引发原因的进一步解释可以参考<strong><a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener">基于vue-cli3/cli4解决前端使用axios跨域问题</a> 。</strong>核心原因是浏览器的同源策略导致的。可以通过自建前端代理，避开直接请求调用。</p>
+<p><img src="https://raw.githubusercontent.com/PsYear/PicGalleryForPicgo/main/cors_error_20211123aaa.png" alt="cors_error"></p>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>通过Vue的代理配置，避开浏览器硬性的同源策略。定义将访问同源的<code>http://localhots:8080/chinanonfiction/feed</code>代理转发为 <code>http://www.chinanonfiction.com/feed/</code></p>
+<ul>
+<li>在组件代码里使用代理的方式进行访问。也就是访问<code>http://localhots:8080/chinanonfiction/feed</code></li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">"/chinanonfiction/feed/"</span>).then(*response* *=&gt;* &#123; </span><br><span class="line">	<span class="keyword">this</span>.info = *response;*&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(err);&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在vue.config.js增加代理配置，并重写路径。也就是将<code>http://localhots:8080/chinanonfiction/feed</code>代理转发为 <code>http://www.chinanonfiction.com/chinanonfiction/feed</code> 并改写为<code>http://www.chinanonfiction.com/feed</code>。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">      proxy: &#123;</span><br><span class="line">          <span class="string">'/chinanonfiction'</span>: &#123;</span><br><span class="line">              target: <span class="string">'http://www.chinanonfiction.com'</span>,<span class="comment">// 你要请求的后端接口ip+port或者网站域名</span></span><br><span class="line">              changeOrigin: <span class="literal">true</span>,<span class="comment">// 允许跨域，在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题</span></span><br><span class="line">              ws: <span class="literal">true</span>,<span class="comment">// 开启webSocket</span></span><br><span class="line">              pathRewrite: &#123;</span><br><span class="line">                  <span class="string">'^/chinanonfiction'</span>: <span class="string">''</span>,<span class="comment">// 替换成target中的地址</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于多目标的请求可以通过增加对应的代理配置进行相应的访问。</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="https://www.npmjs.com/package/vue-axios" target="_blank" rel="noopener">vue-axios - npm</a></li>
+<li><strong><a href="https://juejin.cn/post/6844904088140808205" target="_blank" rel="noopener">基于vue-cli3/cli4解决前端使用axios跨域问题</a></strong></li>
+<li><a href="https://github.com/PanJiaChen/vue-element-admin/issues/3285" target="_blank" rel="noopener"><strong>Cannot read property ‘split’ of null</strong></a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -820,75 +914,6 @@
 <li><a href="https://figma.com" target="_blank" rel="noopener">Figma</a>各类icon制作</li>
 </ul>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="noopener">Hexo NexT主题配置文档</a><br><a href="https://postgres.fun/20181027203300.html" target="_blank" rel="noopener">Hexo: 给博客添加百度统计</a><br><a href="https://asdfv1929.github.io/2018/05/26/next-add-music/" target="_blank" rel="noopener">Hexo NexT主题中添加网页音乐播放器功能</a><br><a href="https://huabuyu.net/Hexo-NexT-%E6%89%93%E9%80%A0APlayer-HTML5-%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8.html" target="_blank" rel="noopener">Hexo NexT 打造APlayer HTML5 音乐播放器</a><br><a href="https://iochen.com/2018/01/06/use-gitalk-in-hexo/" target="_blank" rel="noopener">Hexo中Gitalk配置使用教程-可能是目前最详细的教程</a><br><a href="http://blog.sciencenet.cn/blog-3247241-1139774.html" target="_blank" rel="noopener">hexo博客解决不蒜子统计无法显示问题</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="default">
-    <link itemprop="mainEntityOfPage" href="https://www.wendellsun.com/2019/07/02/「The-score」意外小众的流行摇滚组合/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Wendell Sun">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="宋竹温 | 不羁跬步">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/02/「The-score」意外小众的流行摇滚组合/" class="post-title-link" itemprop="url">「The score」意外小众的流行摇滚组合</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-02 13:49:17" itemprop="dateCreated datePublished" datetime="2019-07-02T13:49:17+08:00">2019-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-24 19:43:36" itemprop="dateModified" datetime="2019-12-24T19:43:36+08:00">2019-12-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-    <div id="aplayer-QecdPath" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div>
-
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>
 
       
     </div>
