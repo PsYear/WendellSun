@@ -8,8 +8,30 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 23 Nov 2021 08:03:22 GMT</pubDate>
+    <pubDate>Tue, 21 Jun 2022 08:36:03 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Future和Promise</title>
+      <link>https://www.wendellsun.com/2022/06/21/Future%E5%92%8CPromise/</link>
+      <guid>https://www.wendellsun.com/2022/06/21/Future%E5%92%8CPromise/</guid>
+      <pubDate>Tue, 21 Jun 2022 08:33:15 GMT</pubDate>
+      <description>
+      
+        
+        
+          
+          
+            &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;sc
+          
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="关于未完成计算对象的场景"><a href="#关于未完成计算对象的场景" class="headerlink" title="关于未完成计算对象的场景"></a>关于未完成计算对象的场景</h2><ul><li>可以思考一个问题，如何对一个未完成计算的对象进行表示。从过程式的角度来看，可以充分等待一个未完成计算对象完成计算后，再执行其他计算步骤。但当充分等待的时间过长，同时等待过程又闲置计算资源，诸如网络请求这类场景，直观的想法是在等待的同时进行与这个计算对象无关的计算，也就是异步的方式进行代码计算调度。而未完成计算对象需要以一种方式表示，以便重新参与进行计算。</li><li>Future和promise的概念被提出，来解决这个未完成计算对象的表示。在future表示的是值，promise表示的是计算方式(设定值的函数)。在实际的各语言实现中，两者含义基本可以混用。但在需要区分的场景，future表示的是变量值的占位符，类似于placeholder，而promise是一个可以「写」的赋值容器。一般而言，两者关系可以描述为，异步函数（promise）的返回值（future）。设置future的值的过程也称为 <em>resolve</em>（解析）、<em>fulfil</em>（实现）或 <em>bind</em>（绑定）它。当然，Future并不一定只能出现在异步非阻塞场景，相同的表示可以满足同步阻塞场景的计算处理。</li></ul><h2 id="设计推演"><a href="#设计推演" class="headerlink" title="设计推演"></a>设计推演</h2><ul><li>如何设计一个完备的future求值过程，需要考虑具体语言特性的因素，但简单而言有以下几点特性需要考虑。</li><li>值的调用：通常对future(异步函数结果) 的使用有两种，分别为隐式和显式的两种。 隐式的含义是，当在进行需要future参与的计算时，如 3 + future(a)，在future(a)所在的地址已经通过promise(异步函数)完成了赋值，只需要进行加法计算，同普通的类型一样。而显式的含义是，需要先进行一步get_future(a)，来触发promise的某个阶段或进行通信判断，得到future(a)的值，再进行加法计算。</li><li>值的计算时间：对于future的求值策略来说，计算可以在创建future时开始（<a href="https://zh.wikipedia.org/wiki/%E5%8F%8A%E6%97%A9%E6%B1%82%E5%80%BC" target="_blank" rel="noopener">及早求值</a>），或者仅在实际需要值时开始（<a href="https://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC" target="_blank" rel="noopener">懒惰求值</a>）。一旦future被赋值，它就不会在访问future的时候重新计算；</li><li>值的计算资源(调度)：在一个异步系统里，可以通过和future对象进行通信，可以在不阻塞的状态下，不断获取future对象的求值状态，直到future对象完成求值，再转而进行future对象相关操作，通常不会频繁请求状态情况，而是等待完成后进行回调操作。但在某些同步的系统中，如某个值的更新有强有序要求，需要第一时间得到future的求值结果进行处理，此时future求值过程有能力阻塞当前进程。当然这个时候future不包含异步特性，和一般变量无区别。在大多数编码过程里，异步过程和同步过程是交替发生的，而此时就需要future能够进行阻塞和非阻塞的切换。</li></ul><h2 id="语言表现"><a href="#语言表现" class="headerlink" title="语言表现"></a>语言表现</h2><ul><li>对于具体的语言使用而言，future和promise的概念是更具体和明确的。通过函数进行生成和调用，future类型的表示是封装的，无需关心计算资源调度等底层逻辑。</li><li>在js中promise类型可以得到异步对象处理的成功/失败两种状态表示的类型。并通过闭包的方式进行状态传递。也就是将和异步调用相关的代码，从过程式转化为函数式。</li><li>在python中，存在多个不同future库，但使用逻辑上基本是一致的，如concurrent的futures、 asyncio的Future。async / await的配合可以实现异步非阻塞，和result配合可以实现同步阻塞。</li></ul><h2 id="相关类型"><a href="#相关类型" class="headerlink" title="相关类型"></a>相关类型</h2><ul><li>响应式编程的signal</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://zh.wikipedia.org/wiki/Future%E4%B8%8Epromise" target="_blank" rel="noopener">Future与promise</a></li></ul>]]></content:encoded>
+      
+      <comments>https://www.wendellsun.com/2022/06/21/Future%E5%92%8CPromise/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>vue3中axios使用以及CORS ERROR处理</title>
@@ -207,28 +229,6 @@
       <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>下载:  <a href="https://motrix.app/" target="_blank" rel="noopener">motrix</a> - 可以作为迅雷部分无法下载资源的备用，部分迅雷服务器可以缓存的资源，速度还是迅雷更快</p><p>code展示: <a href="https://carbon.now.sh/" target="_blank" rel="noopener">Carbon</a></p><p>mac 录屏幕：<a href="https://giphy.com/apps/giphycapture" target="_blank" rel="noopener">GIPHY CAPTURE</a></p><p>Markdown: <a href="https://www.typora.io" target="_blank" rel="noopener">Typora</a></p><p>Mysql gui: <a href="https://www.sequelpro.com/" target="_blank" rel="noopener">sequel pro</a> - mac上非常容易操作的轻量mysql gui，当然大部分情况下python的mysql包就完全够用了</p><p>Gist gui：<a href="https://hackjutsu.com/Lepton/" target="_blank" rel="noopener">Lepton</a> - 比较好用的gist桌面应用，可惜没有搜索功能</p>]]></content:encoded>
       
       <comments>https://www.wendellsun.com/2019/07/04/%E5%88%A9%E5%99%A8/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>本站使用的hexo额外插件</title>
-      <link>https://www.wendellsun.com/2019/07/02/%E6%9C%AC%E7%AB%99%E4%BD%BF%E7%94%A8%E7%9A%84hexo%E9%A2%9D%E5%A4%96%E6%8F%92%E4%BB%B6/</link>
-      <guid>https://www.wendellsun.com/2019/07/02/%E6%9C%AC%E7%AB%99%E4%BD%BF%E7%94%A8%E7%9A%84hexo%E9%A2%9D%E5%A4%96%E6%8F%92%E4%BB%B6/</guid>
-      <pubDate>Tue, 02 Jul 2019 05:51:31 GMT</pubDate>
-      <description>
-      
-        
-        
-          
-          
-            &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;sc
-          
-        
-      
-      </description>
-      
-      <content:encoded><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><ul><li><a href="http://duyana.top/post/59d52da5/" target="_blank" rel="noopener">gitalk</a></li><li><a href="https://getpocket.com/redirect?url=https%3A%2F%2Ftianma.space%2Fpost%2F3998746934%2Findex.html" target="_blank" rel="noopener">hexo-tag-aplayer</a></li><li><a href="https://www.jianshu.com/p/6eb068a68b17" target="_blank" rel="noopener">百度统计</a></li><li><a href="https://lfwen.site/2016/11/13/next-busuanzi-vistor-count/" target="_blank" rel="noopener">不蒜子</a></li><li><a href="https://figma.com" target="_blank" rel="noopener">Figma</a>各类icon制作</li></ul><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="noopener">Hexo NexT主题配置文档</a><br><a href="https://postgres.fun/20181027203300.html" target="_blank" rel="noopener">Hexo: 给博客添加百度统计</a><br><a href="https://asdfv1929.github.io/2018/05/26/next-add-music/" target="_blank" rel="noopener">Hexo NexT主题中添加网页音乐播放器功能</a><br><a href="https://huabuyu.net/Hexo-NexT-%E6%89%93%E9%80%A0APlayer-HTML5-%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8.html" target="_blank" rel="noopener">Hexo NexT 打造APlayer HTML5 音乐播放器</a><br><a href="https://iochen.com/2018/01/06/use-gitalk-in-hexo/" target="_blank" rel="noopener">Hexo中Gitalk配置使用教程-可能是目前最详细的教程</a><br><a href="http://blog.sciencenet.cn/blog-3247241-1139774.html" target="_blank" rel="noopener">hexo博客解决不蒜子统计无法显示问题</a></p>]]></content:encoded>
-      
-      <comments>https://www.wendellsun.com/2019/07/02/%E6%9C%AC%E7%AB%99%E4%BD%BF%E7%94%A8%E7%9A%84hexo%E9%A2%9D%E5%A4%96%E6%8F%92%E4%BB%B6/#disqus_thread</comments>
     </item>
     
   </channel>

@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Future和Promise</title>
+      <link href="/2022/06/21/Future%E5%92%8CPromise/"/>
+      <url>/2022/06/21/Future%E5%92%8CPromise/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="关于未完成计算对象的场景"><a href="#关于未完成计算对象的场景" class="headerlink" title="关于未完成计算对象的场景"></a>关于未完成计算对象的场景</h2><ul><li>可以思考一个问题，如何对一个未完成计算的对象进行表示。从过程式的角度来看，可以充分等待一个未完成计算对象完成计算后，再执行其他计算步骤。但当充分等待的时间过长，同时等待过程又闲置计算资源，诸如网络请求这类场景，直观的想法是在等待的同时进行与这个计算对象无关的计算，也就是异步的方式进行代码计算调度。而未完成计算对象需要以一种方式表示，以便重新参与进行计算。</li><li>Future和promise的概念被提出，来解决这个未完成计算对象的表示。在future表示的是值，promise表示的是计算方式(设定值的函数)。在实际的各语言实现中，两者含义基本可以混用。但在需要区分的场景，future表示的是变量值的占位符，类似于placeholder，而promise是一个可以「写」的赋值容器。一般而言，两者关系可以描述为，异步函数（promise）的返回值（future）。设置future的值的过程也称为 <em>resolve</em>（解析）、<em>fulfil</em>（实现）或 <em>bind</em>（绑定）它。当然，Future并不一定只能出现在异步非阻塞场景，相同的表示可以满足同步阻塞场景的计算处理。</li></ul><h2 id="设计推演"><a href="#设计推演" class="headerlink" title="设计推演"></a>设计推演</h2><ul><li>如何设计一个完备的future求值过程，需要考虑具体语言特性的因素，但简单而言有以下几点特性需要考虑。</li><li>值的调用：通常对future(异步函数结果) 的使用有两种，分别为隐式和显式的两种。 隐式的含义是，当在进行需要future参与的计算时，如 3 + future(a)，在future(a)所在的地址已经通过promise(异步函数)完成了赋值，只需要进行加法计算，同普通的类型一样。而显式的含义是，需要先进行一步get_future(a)，来触发promise的某个阶段或进行通信判断，得到future(a)的值，再进行加法计算。</li><li>值的计算时间：对于future的求值策略来说，计算可以在创建future时开始（<a href="https://zh.wikipedia.org/wiki/%E5%8F%8A%E6%97%A9%E6%B1%82%E5%80%BC" target="_blank" rel="noopener">及早求值</a>），或者仅在实际需要值时开始（<a href="https://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC" target="_blank" rel="noopener">懒惰求值</a>）。一旦future被赋值，它就不会在访问future的时候重新计算；</li><li>值的计算资源(调度)：在一个异步系统里，可以通过和future对象进行通信，可以在不阻塞的状态下，不断获取future对象的求值状态，直到future对象完成求值，再转而进行future对象相关操作，通常不会频繁请求状态情况，而是等待完成后进行回调操作。但在某些同步的系统中，如某个值的更新有强有序要求，需要第一时间得到future的求值结果进行处理，此时future求值过程有能力阻塞当前进程。当然这个时候future不包含异步特性，和一般变量无区别。在大多数编码过程里，异步过程和同步过程是交替发生的，而此时就需要future能够进行阻塞和非阻塞的切换。</li></ul><h2 id="语言表现"><a href="#语言表现" class="headerlink" title="语言表现"></a>语言表现</h2><ul><li>对于具体的语言使用而言，future和promise的概念是更具体和明确的。通过函数进行生成和调用，future类型的表示是封装的，无需关心计算资源调度等底层逻辑。</li><li>在js中promise类型可以得到异步对象处理的成功/失败两种状态表示的类型。并通过闭包的方式进行状态传递。也就是将和异步调用相关的代码，从过程式转化为函数式。</li><li>在python中，存在多个不同future库，但使用逻辑上基本是一致的，如concurrent的futures、 asyncio的Future。async / await的配合可以实现异步非阻塞，和result配合可以实现同步阻塞。</li></ul><h2 id="相关类型"><a href="#相关类型" class="headerlink" title="相关类型"></a>相关类型</h2><ul><li>响应式编程的signal</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://zh.wikipedia.org/wiki/Future%E4%B8%8Epromise" target="_blank" rel="noopener">Future与promise</a></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vue3中axios使用以及CORS ERROR处理</title>
       <link href="/2021/11/23/vue3%E4%B8%ADaxios%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8ACORS-ERROR%E5%A4%84%E7%90%86/"/>
       <url>/2021/11/23/vue3%E4%B8%ADaxios%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8ACORS-ERROR%E5%A4%84%E7%90%86/</url>
@@ -138,7 +151,7 @@
       <link href="/2019/07/02/%E3%80%8CThe-score%E3%80%8D%E6%84%8F%E5%A4%96%E5%B0%8F%E4%BC%97%E7%9A%84%E6%B5%81%E8%A1%8C%E6%91%87%E6%BB%9A%E7%BB%84%E5%90%88/"/>
       <url>/2019/07/02/%E3%80%8CThe-score%E3%80%8D%E6%84%8F%E5%A4%96%E5%B0%8F%E4%BC%97%E7%9A%84%E6%B5%81%E8%A1%8C%E6%91%87%E6%BB%9A%E7%BB%84%E5%90%88/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>    <div id="aplayer-LmljghKd" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>    <div id="aplayer-cPUtBtXz" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="471411253" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FF4081"></div><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://github.com/metowolf/MetingJS#option" target="_blank" rel="noopener">MetingJS</a></p>]]></content>
       
       
       
